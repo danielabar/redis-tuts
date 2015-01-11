@@ -1,3 +1,16 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Table of Contents**  *generated with [DocToc](http://doctoc.herokuapp.com/)*
+
+- [Redis Essentials](#redis-essentials)
+  - [Installation](#installation)
+  - [Data Structures Overview](#data-structures-overview)
+    - [Keys](#keys)
+  - [String Commands](#string-commands)
+  - [List Commands](#list-commands)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Redis Essentials
 ==========
 
@@ -205,3 +218,61 @@ To get number of characters in a key value
 
   ```strlen name
   (integer) 8
+
+## List Commands
+
+Lists are stored as link lists and they are kept in a specific order.
+
+To push an item into a list, for example to add the value "blue" to a list named "colors"
+
+  ```
+  lpush colors "blue"
+  ```
+
+Note 'colors' list did not have to exist previously, `lpush` will create it. To add more items
+
+  ```
+  lpush colors red orange
+  ```
+
+Note 'l' does not stand for list, it stands for 'left', as in `lpush` pushes onto the left side of the list.
+To push to the right of the list
+
+  ```
+  rpush colors yellow green
+  ```
+
+To push a value into a list only if the list already exists (but doesn't care about whether the value exists in the listor not).
+For example, the list 'colors' already exists and the value blue is already in it, this push will go through
+
+  ```
+  lpushx colors blue
+  lpushx names jim  // doesn't work because there is no 'names' list
+  ```
+
+To get the number of items in a length
+
+  ```
+  llen colors  // (integer) 6
+  ```
+
+In this case, the 'l' does stand for list. Inconsistent!
+
+To get all items from a list, specify range starting from 0 (beginning) to -1 (last)
+
+  ```
+  lrange colors 0 -1
+  ```
+
+To get just a sub range
+
+  ```
+  lrange colors 3 4
+  ```
+
+To retrieve an item AND remove it from list, for example, from left side (`rpop` for right side)
+
+  ```
+  lpop colors  // "blue"
+  ```
+
